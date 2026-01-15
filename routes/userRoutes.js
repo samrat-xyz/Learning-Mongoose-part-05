@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const User = require('../models/userModel')
+
 router.post('/users',async(req,res)=>{
     try{
         const data = req.body
@@ -15,6 +16,22 @@ router.post('/users',async(req,res)=>{
         res.status(400).json({
             success : false,
             message:'failed to create user'
+        })
+    }
+})
+
+router.get('/users',async(req,res)=>{
+    try{
+        const result = await User.find()
+        res.status(200).json({
+            success:true,
+            result
+        })
+    }catch(err){
+        res.status(400).json({
+            success :false,
+            message:"user not found",
+            err
         })
     }
 })
